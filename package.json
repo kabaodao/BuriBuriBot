@@ -1,0 +1,19 @@
+{
+  "name": "BuriBuriBot",
+  "version": "1.0.0",
+  "description": "Discord Bot",
+  "main": "index.js",
+  "author": "kabaodao",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.5.0",
+    "discord-api-types": "^0.33.5",
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.17.0"
+  }
+}
