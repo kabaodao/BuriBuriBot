@@ -20,10 +20,11 @@ jobs:
       with:
         workload_identity_provider: 'projects/230200288570/locations/global/workloadIdentityPools/github-actions-deploy/providers/github-actions'
         service_account: 'github-actions-vm-deploy-accou@buriburibot.iam.gserviceaccount.com'
-        audience: 'https://github.com/kabaodao'
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v0'
-
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
+    - id: 'compute-ssh'
+      uses: 'google-github-actions/ssh-compute@v0'
+      with:
+      instance_name: 'instance-1'
+      zone: 'us-west1-b'
+      ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+      command: 'echo Hello world'
