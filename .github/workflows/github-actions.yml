@@ -5,6 +5,8 @@ on:
 
 jobs:
   job_main:
+    runs-on: ubuntu-latest
+
     permissions:
       contents: 'read'
       id-token: 'write'
