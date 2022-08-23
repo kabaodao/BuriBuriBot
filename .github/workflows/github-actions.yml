@@ -24,7 +24,7 @@ jobs:
     - id: 'compute-ssh'
       uses: 'google-github-actions/ssh-compute@v0'
       with:
-      instance_name: 'instance-1'
-      zone: 'us-west1-b'
-      ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-      command: 'echo Hello world'
+        instance_name: 'instance-1'
+        zone: 'us-west1-b'
+        ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+        command: 'echo Hello world'
