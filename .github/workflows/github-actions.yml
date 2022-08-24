@@ -26,7 +26,7 @@ jobs:
         instance_name: 'instance-1'
         zone: 'us-west1-b'
         ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-        command: 'echo hello world'
+        command: 'pwd'
 
     - name: 'Show Output'
       run: |-
