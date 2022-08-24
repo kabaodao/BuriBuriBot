@@ -19,7 +19,7 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         workload_identity_provider: 'projects/230200288570/locations/global/workloadIdentityPools/github-actions-deploy/providers/github-actions'
-        service_account: 'github-actions-vm-deploy-accou@buriburibot.iam.gserviceaccount.com'
+        service_account: 'github-actions@buriburibot.iam.gserviceaccount.com'
 
     - id: 'compute-ssh'
       uses: 'google-github-actions/ssh-compute@v0'
