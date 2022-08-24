@@ -29,6 +29,6 @@ jobs:
         command: 'ls -a'
 
     - name: 'Show Output'
-      run: | -
+      run: |-
         echo '${{ steps.ssh.outputs.stdout }}'
         echo '${{ steps.ssh.outputs.stderr }}'
