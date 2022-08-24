@@ -20,7 +20,7 @@ jobs:
         workload_identity_provider: 'projects/230200288570/locations/global/workloadIdentityPools/github-actions-deploy/providers/github-actions'
         service_account: 'github-actions@buriburibot.iam.gserviceaccount.com'
 
-    - id: 'compute-ssh'
+    - id: 'ssh'
       uses: 'google-github-actions/ssh-compute@v0'
       with:
         instance_name: 'instance-1'
