@@ -27,3 +27,8 @@ jobs:
         zone: 'us-west1-b'
         ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
         command: 'ls -a'
+
+    - name: 'Show Output'
+      run: | -
+        echo '${{ steps.ssh.outputs.stdout }}'
+        echo '${{ steps.ssh.outputs.stderr }}'
