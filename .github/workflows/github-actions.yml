@@ -26,8 +26,9 @@ jobs:
         instance_name: 'instance-1'
         zone: 'us-west1-b'
         ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-        command: 'pwd'
-        command: 'ls -a'
+        command: |-
+          pwd
+          ls -a
 
     - name: 'Show Output'
       run: |-
