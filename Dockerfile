@@ -1,5 +1,7 @@
 FROM node:latest
 
+ENV DISCORD_TOKEN=$DISCORD_TOKEN
+
 WORKDIR /app
 COPY package*.json ./
 
