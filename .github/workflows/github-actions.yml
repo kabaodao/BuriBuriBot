@@ -32,7 +32,7 @@ jobs:
           sudo docker rmi main_image
           sudo git -C ../kabaodao/BuriBuriBot pull origin main
           sudo docker build -t main_image ../kabaodao/BuriBuriBot/.
-          sudo docker run -d main_image
+          sudo docker run -d -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} main_image
 
     - name: 'Show Output'
       run: |-
