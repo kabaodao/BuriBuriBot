@@ -62,7 +62,6 @@ module.exports = {
       const userName = interaction.options.getString('user-name');
       const type = interaction.options.getString('type');
       const mode = interaction.options.getString('mode');
-      console.log(mode);
 
       const embed = createUserEmbed(
         await getOsuUserData(userName, type, mode),
@@ -154,9 +153,18 @@ const getUnixTimestamp = () => {
 };
 
 const getOsuTokenJson = () => {
-  const tokenJson = JSON.parse(fs.readFileSync('../osu_token.json', 'utf-8'));
-
-  return tokenJson;
+  try {
+    const tokenJson = JSON.parse(fs.readFileSync('../osu_token.json', 'utf-8'));
+    return tokenJson;
+  } catch (e) {
+    const tokenJson = {
+      access_token: '',
+      expires_in: 0,
+      token_type: 'Bearer',
+      createUnixTimestamp: 0,
+    };
+    return tokenJson;
+  }
 };
 
 const checkOsuToken = (tokenJson, unixTimestamp) => {
@@ -172,7 +180,7 @@ const checkOsuToken = (tokenJson, unixTimestamp) => {
 const getOsuToken = async () => {
   const tokenJson = getOsuTokenJson();
   const unixTimestamp = getUnixTimestamp();
-  if ((checkOsuToken(tokenJson), unixTimestamp)) {
+  if (checkOsuToken(tokenJson, unixTimestamp)) {
     return tokenJson.access_token;
   } else {
     const url = new URL('https://osu.ppy.sh/oauth/token');
