@@ -27,7 +27,7 @@ jobs:
         zone: 'us-west1-b'
         ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
         command: |
-          sudo docker stop $(docker ps -q)
+          sudo docker stop $(sudo docker ps -q)
           sudo docker system prune -f
           sudo docker rmi main_image
           sudo git -C ../kabaodao/BuriBuriBot pull origin main
