@@ -4,7 +4,7 @@ const fetch = (...args) =>
 const dotenv = require('dotenv');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: '../.env' });
 
 const osuClientId = process.env.OSU_CLIENT_ID;
 const osuClientSecret = process.env.OSU_CLIENT_SECRET;
