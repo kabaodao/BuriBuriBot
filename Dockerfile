@@ -5,7 +5,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ../.env .
+COPY . .
 RUN touch osu_token.json
 
 CMD ["node", "./src/index.js"]

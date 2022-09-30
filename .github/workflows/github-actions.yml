@@ -31,6 +31,7 @@ jobs:
           sudo docker system prune -f
           sudo docker rmi main_image
           sudo git -C ../kabaodao/BuriBuriBot pull origin main
+          sudo mv ../kabaodao/.env ../kabaodao/BuriBuriBot/
           sudo docker build -t main_image ../kabaodao/BuriBuriBot/.
           sudo docker run -d -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} main_image
 
