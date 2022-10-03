@@ -74,6 +74,12 @@ module.exports = {
   },
 };
 
+/**
+ *
+ * @param {Object} userData
+ * @param {String} type
+ * @returns {EmbedBuilder}
+ */
 const createUserEmbed = (userData, type) => {
   if (userData === undefined) {
     const embed = new EmbedBuilder()
@@ -145,6 +151,10 @@ const createUserEmbed = (userData, type) => {
   return embed;
 };
 
+/**
+ *
+ * @returns {Number}
+ */
 const getUnixTimestamp = () => {
   const date = new Date();
   const unixTimestamp = date.getTime();
@@ -152,6 +162,10 @@ const getUnixTimestamp = () => {
   return unixTimestamp;
 };
 
+/**
+ *
+ * @returns {Object}
+ */
 const getOsuTokenJson = () => {
   try {
     const tokenJson = JSON.parse(fs.readFileSync('../osu_token.json', 'utf-8'));
@@ -167,6 +181,12 @@ const getOsuTokenJson = () => {
   }
 };
 
+/**
+ *
+ * @param {Object} tokenJson
+ * @param {Number} unixTimestamp
+ * @returns {Boolean}
+ */
 const checkOsuToken = (tokenJson, unixTimestamp) => {
   if (unixTimestamp > tokenJson.createUnixTimestamp + 86400000) {
     console.log('Take token.');
@@ -177,6 +197,10 @@ const checkOsuToken = (tokenJson, unixTimestamp) => {
   }
 };
 
+/**
+ *
+ * @returns {String}
+ */
 const getOsuToken = async () => {
   const tokenJson = getOsuTokenJson();
   const unixTimestamp = getUnixTimestamp();
@@ -210,6 +234,12 @@ const getOsuToken = async () => {
   }
 };
 
+/**
+ *
+ * @param {Object} tokenJson
+ * @param {Number} unixTimestamp
+ * @param {Object} responseData
+ */
 const writeOsuToken = (tokenJson, unixTimestamp, responseData) => {
   const newTokeJson = Object.assign({}, tokenJson);
   for (const i in tokenJson) {
@@ -228,6 +258,12 @@ const writeOsuToken = (tokenJson, unixTimestamp, responseData) => {
   );
 };
 
+/**
+ *
+ * @param {Object} token
+ * @param {String} userName
+ * @returns {Number}
+ */
 const getOsuUserId = async (token, userName) => {
   const url = new URL(`https://osu.ppy.sh/api/v2/users/${userName}`);
   const headers = {
@@ -247,6 +283,13 @@ const getOsuUserId = async (token, userName) => {
   return userId;
 };
 
+/**
+ *
+ * @param {String} userName
+ * @param {String} type
+ * @param {String} mode
+ * @returns {Object}
+ */
 const getOsuUserData = async (userName, type, mode) => {
   const token = await getOsuToken();
   const userId = await getOsuUserId(token, userName);
