@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
+    "aws-sdk": "^2.1233.0",
     "discord-api-types": "^0.37.4",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
