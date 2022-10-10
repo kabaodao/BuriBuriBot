@@ -30,45 +30,75 @@ module.exports = {
 
   async execute(interaction) {
     if (interaction.guild.id === '544782680051679242') {
+      const instanceState = await getInstanceState();
       if (interaction.options.getSubcommand() === 'start') {
-        await interaction.reply('start');
-
-        ec2.startInstances(params, (err) => {
-          console.log(err);
-          if (err && err.code === 'DryRunOperation') {
-            params.DryRun = false;
-            ec2.startInstances(params, (err, data) => {
-              if (err) {
-                console.log('Error', err);
-              } else if (data) {
-                console.log('Success', data.StartingInstances);
-              }
-            });
-          } else {
-            console.log("You don't have permission to start instances.");
-          }
-        });
+        if (instanceState === 'stopped') {
+          ec2.startInstances(params, (err) => {
+            if (err && err.code === 'DryRunOperation') {
+              params.DryRun = false;
+              ec2.startInstances(params, (err, data) => {
+                if (err) {
+                  console.log('Error', err);
+                } else if (data) {
+                  console.log('Success', data.StartingInstances);
+                }
+              });
+            } else {
+              console.log("You don't have permission to start instances.");
+            }
+          });
+          await interaction.reply('Server is running!');
+        } else {
+          await interaction.reply('Server is already running!');
+        }
       } else if (interaction.options.getSubcommand() === 'stop') {
-        await interaction.reply('stop');
-
-        ec2.stopInstances(params, (err) => {
-          if (err && err.code === 'DryRunOperation') {
-            console.log(err);
-            params.DryRun = false;
-            ec2.stopInstances(params, (err, data) => {
-              if (err) {
-                console.log('Error', err);
-              } else if (data) {
-                console.log('Success', data.StoppingInstances);
-              }
-            });
-          } else {
-            console.log("You don't have permission to stop instances");
-          }
-        });
+        if (instanceState === 'running') {
+          ec2.stopInstances(params, (err) => {
+            if (err && err.code === 'DryRunOperation') {
+              console.log(err);
+              params.DryRun = false;
+              ec2.stopInstances(params, (err, data) => {
+                if (err) {
+                  console.log('Error', err);
+                } else if (data) {
+                  console.log('Success', data.StoppingInstances);
+                }
+              });
+            } else {
+              console.log("You don't have permission to stop instances");
+            }
+          });
+          await interaction.reply('Server is stopped!');
+        } else {
+          await interaction.reply('Server is already stopped!');
+        }
       }
     } else {
       await interaction.reply('You can not use this command.');
     }
   },
 };
+
+const getInstanceDescribe = () => {
+  return new Promise((resolve) => {
+    ec2.describeInstances({}, (err, data) => {
+      if (err) {
+        console.log('Error', err.stack);
+      } else {
+        resolve(data.Reservations[0].Instances[0]);
+      }
+    });
+  });
+};
+
+const getInstanceState = async () => {
+  const instanceData = await getInstanceDescribe();
+
+  return instanceData.State.Name;
+};
+
+// const getInstanceIp = async () => {
+//   const instanceData = await getInstanceDescribe();
+
+//   return instanceData;
+// };
