@@ -97,8 +97,13 @@ const getInstanceState = async () => {
   return instanceData.State.Name;
 };
 
-// const getInstanceIp = async () => {
-//   const instanceData = await getInstanceDescribe();
+const getInstanceIp = async () => {
+  const instanceData = await getInstanceDescribe();
+  let ip = 'None';
+  if (instanceData.State.Name === 'running') {
+    ip = instanceData.PublicIpAddress;
+    return ip;
+  }
 
-//   return instanceData;
-// };
+  return ip;
+};
