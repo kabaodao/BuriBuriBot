@@ -48,6 +48,8 @@ module.exports = {
             }
           });
           await interaction.reply('Server is running!');
+        } else if (instanceState === 'pending') {
+          await interaction.reply('Server is pending!');
         } else {
           await interaction.reply('Server is already running!');
         }
@@ -69,6 +71,8 @@ module.exports = {
             }
           });
           await interaction.reply('Server is stopped!');
+        } else if (instanceState === 'pending') {
+          await interaction.reply('Server is pending!');
         } else {
           await interaction.reply('Server is already stopped!');
         }
