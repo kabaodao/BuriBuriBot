@@ -71,8 +71,8 @@ module.exports = {
             }
           });
           await interaction.reply('Server is stopped!');
-        } else if (instanceState === 'pending') {
-          await interaction.reply('Server is pending!');
+        } else if (instanceState === 'stopping') {
+          await interaction.reply('Server is stopping!');
         } else {
           await interaction.reply('Server is already stopped!');
         }
