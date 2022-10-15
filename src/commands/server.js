@@ -26,12 +26,16 @@ module.exports = {
     )
     .addSubcommand((subcommand) =>
       subcommand.setName('stop').setDescription('Stop the server.'),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName('info').setDescription('Show the server information.'),
     ),
 
   async execute(interaction) {
     if (interaction.guild.id === '544782680051679242') {
+      const subCommand = interaction.options.getSubcommand();
       const instanceState = await getInstanceState();
-      if (interaction.options.getSubcommand() === 'start') {
+      if (subCommand === 'start') {
         if (instanceState === 'stopped') {
           ec2.startInstances(params, (err) => {
             if (err && err.code === 'DryRunOperation') {
@@ -53,7 +57,7 @@ module.exports = {
         } else {
           await interaction.reply('Server is already running!');
         }
-      } else if (interaction.options.getSubcommand() === 'stop') {
+      } else if (subCommand === 'stop') {
         if (instanceState === 'running') {
           ec2.stopInstances(params, (err) => {
             if (err && err.code === 'DryRunOperation') {
@@ -76,6 +80,10 @@ module.exports = {
         } else {
           await interaction.reply('Server is already stopped!');
         }
+      } else if (subCommand === 'info') {
+        const nowInstanceState = getInstanceState();
+        const ip = getInstanceIp();
+        await interaction.reply(`State: ${nowInstanceState}\nIp: ${ip}`);
       }
     } else {
       await interaction.reply('You can not use this command.');
