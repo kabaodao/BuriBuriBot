@@ -81,8 +81,8 @@ module.exports = {
           await interaction.reply('Server is already stopped!');
         }
       } else if (subCommand === 'info') {
-        const nowInstanceState = getInstanceState();
-        const ip = getInstanceIp();
+        const nowInstanceState = await getInstanceState();
+        const ip = await getInstanceIp();
         await interaction.reply(`State: ${nowInstanceState}\nIp: ${ip}`);
       }
     } else {
