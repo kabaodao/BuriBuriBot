@@ -36,6 +36,10 @@ jobs:
           -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} \
           -e OSU_CLIENT_ID=${{ secrets.OSU_CLIENT_ID }} \
           -e OSU_CLIENT_SECRET=${{ secrets.OSU_CLIENT_SECRET }} \
+          -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+          -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          -e AWS_REGION=${{ secrets.AWS_REGION }} \
+          -e AWS_INSTANCE_ID=${{ secrets.AWS_INSTANCE_ID }} \
           main_image
 
     - name: 'Show Output'
