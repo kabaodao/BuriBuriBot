@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const { SlashCommandBuilder } = require('discord.js');
 const aws = require('aws-sdk');
-const svm = require('./modules/server_module.js');
+const svm = require('../modules/server_module.js');
 
 dotenv.config({ path: '../.env' });
 
@@ -52,7 +52,7 @@ module.exports = {
               console.log("You don't have permission to start instances.");
             }
           });
-          await interaction.reply('Server is running!');
+          await interaction.reply('Server is starting!');
         } else if (instanceState === 'pending') {
           await interaction.reply('Server is pending!');
         } else {
@@ -84,10 +84,9 @@ module.exports = {
       } else if (subCommand === 'info') {
         const nowInstanceState = await getInstanceState();
         const ip = await getInstanceIp();
-        await interaction.reply({
-          content: `\`State\`: *${nowInstanceState}*\n\`IP\`: ||${ip}||`,
-          components: [svm.getStartRow],
-        });
+        await interaction.reply(
+          `\`State\`: *${nowInstanceState}*\n\`IP\`: ||${ip}||`,
+        );
       }
     } else {
       await interaction.reply('You can not use this command.');
