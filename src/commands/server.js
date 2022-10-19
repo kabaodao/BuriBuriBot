@@ -83,7 +83,10 @@ module.exports = {
       } else if (subCommand === 'info') {
         const nowInstanceState = await getInstanceState();
         const ip = await getInstanceIp();
-        await interaction.reply(`State: ${nowInstanceState}\nIp: ${ip}`);
+        await interaction.reply(`
+          \`State\`: *${nowInstanceState}*\n
+          \`IP\`: ||${ip}||
+        `);
       }
     } else {
       await interaction.reply('You can not use this command.');
