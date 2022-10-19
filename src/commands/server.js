@@ -52,7 +52,13 @@ module.exports = {
               console.log("You don't have permission to start instances.");
             }
           });
-          await interaction.reply('Server is starting!');
+
+          const row = svm.getStartRow();
+
+          await interaction.reply({
+            content: 'Server is starting!',
+            components: [row],
+          });
         } else if (instanceState === 'pending') {
           await interaction.reply('Server is pending!');
         } else {
