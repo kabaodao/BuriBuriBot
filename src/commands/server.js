@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const { SlashCommandBuilder } = require('discord.js');
 const aws = require('aws-sdk');
+const svm = require('./modules/server_module.js');
 
 dotenv.config({ path: '../.env' });
 
@@ -83,7 +84,10 @@ module.exports = {
       } else if (subCommand === 'info') {
         const nowInstanceState = await getInstanceState();
         const ip = await getInstanceIp();
-        await interaction.reply(`State: ${nowInstanceState}\nIp: ${ip}`);
+        await interaction.reply({
+          content: `\`State\`: *${nowInstanceState}*\n\`IP\`: ||${ip}||`,
+          components: [svm.getStartRow],
+        });
       }
     } else {
       await interaction.reply('You can not use this command.');
