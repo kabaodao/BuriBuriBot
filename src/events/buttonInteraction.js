@@ -1,22 +1,17 @@
 const { Events } = require('discord.js');
+const svm = require('../modules/server_module.js');
 
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.isButton()) return;
 
-    const filter = (i) => i.customId === 'info';
-
-    const collector = interaction.channel.createMessageComponentCollector({
-      filter,
-      time: 15000,
-    });
-
-    collector.on('collect', async (i) => {
-      await i.deferUpdate();
-      await i.editReply({ content: 'HeHe', components: [] });
-      console.log('fdsiljfldajsdkj');
-    });
-    console.log('a');
+    if (interaction.customId === 'info') {
+      const nowInstanceState = await svm.getInstanceState();
+      const ip = await svm.getInstanceIp();
+      await interaction.reply(
+        `\`State\`: *${nowInstanceState}*\n\`IP\`: ||${ip}||`,
+      );
+    }
   },
 };
