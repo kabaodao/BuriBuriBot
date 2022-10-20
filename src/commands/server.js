@@ -35,7 +35,7 @@ module.exports = {
   async execute(interaction) {
     if (interaction.guild.id === '544782680051679242') {
       const subCommand = interaction.options.getSubcommand();
-      const instanceState = await getInstanceState();
+      const instanceState = await svm.getInstanceState();
       if (subCommand === 'start') {
         if (instanceState === 'stopped') {
           ec2.startInstances(params, (err) => {
@@ -88,8 +88,8 @@ module.exports = {
           await interaction.reply('Server is already stopped!');
         }
       } else if (subCommand === 'info') {
-        const nowInstanceState = await getInstanceState();
-        const ip = await getInstanceIp();
+        const nowInstanceState = await svm.getInstanceState();
+        const ip = await svm.getInstanceIp();
         await interaction.reply(
           `\`State\`: *${nowInstanceState}*\n\`IP\`: ||${ip}||`,
         );
@@ -98,33 +98,4 @@ module.exports = {
       await interaction.reply('You can not use this command.');
     }
   },
-};
-
-const getInstanceDescribe = () => {
-  return new Promise((resolve) => {
-    ec2.describeInstances({}, (err, data) => {
-      if (err) {
-        console.log('Error', err.stack);
-      } else {
-        resolve(data.Reservations[0].Instances[0]);
-      }
-    });
-  });
-};
-
-const getInstanceState = async () => {
-  const instanceData = await getInstanceDescribe();
-
-  return instanceData.State.Name;
-};
-
-const getInstanceIp = async () => {
-  const instanceData = await getInstanceDescribe();
-  let ip = 'None';
-  if (instanceData.State.Name === 'running') {
-    ip = instanceData.PublicIpAddress;
-    return ip;
-  }
-
-  return ip;
 };
