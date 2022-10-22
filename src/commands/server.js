@@ -1,13 +1,8 @@
 const dotenv = require('dotenv');
 const { SlashCommandBuilder } = require('discord.js');
-const aws = require('aws-sdk');
 const svm = require('../modules/server_module.js');
 
 dotenv.config({ path: '../.env' });
-
-aws.config.update({
-  region: process.env.AWS_REGION,
-});
 
 module.exports = {
   data: new SlashCommandBuilder()
