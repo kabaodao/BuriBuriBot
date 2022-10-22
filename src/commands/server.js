@@ -26,7 +26,6 @@ module.exports = {
       if (subCommand === 'start') {
         if (instanceState === 'stopped') {
           svm.startInstance();
-
           await interaction.reply({
             content: 'Server is starting!',
             components: [row],
@@ -37,7 +36,6 @@ module.exports = {
       } else if (subCommand === 'stop') {
         if (instanceState === 'running') {
           svm.stopInstance();
-
           await interaction.reply('Server is stopping!');
         } else {
           await interaction.reply(`Server is ${row}`);
