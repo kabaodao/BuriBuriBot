@@ -43,7 +43,7 @@ module.exports = {
         if (instanceState === 'running') {
           svm.stopInstance();
 
-          await interaction.reply('Server is stopped!');
+          await interaction.reply('Server is stopping!');
         } else {
           await interaction.reply(`Server is ${row}`);
         }
