@@ -12,6 +12,46 @@ const ec2 = new aws.EC2({
   apiVersion: '2016-11-15',
 });
 
+const params = {
+  InstanceIds: [process.env.AWS_INSTANCE_ID],
+  DryRun: true,
+};
+
+exports.startInstance = () => {
+  ec2.startInstances(params, (err) => {
+    if (err && err.code === 'DryRunOperation') {
+      params.DryRun = false;
+      ec2.startInstances(params, (err, data) => {
+        if (err) {
+          console.log('Error', err);
+        } else if (data) {
+          console.log('Success', data.StartingInstances);
+        }
+      });
+    } else {
+      console.log("You don't have permission to start instances.");
+    }
+  });
+};
+
+exports.stopInstance = () => {
+  ec2.stopInstances(params, (err) => {
+    if (err && err.code === 'DryRunOperation') {
+      console.log(err);
+      params.DryRun = false;
+      ec2.stopInstances(params, (err, data) => {
+        if (err) {
+          console.log('Error', err);
+        } else if (data) {
+          console.log('Success', data.StoppingInstances);
+        }
+      });
+    } else {
+      console.log("You don't have permission to stop instances");
+    }
+  });
+};
+
 const getInstanceDescribe = () => {
   return new Promise((resolve) => {
     ec2.describeInstances({}, (err, data) => {
