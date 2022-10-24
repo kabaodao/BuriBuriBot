@@ -22,23 +22,23 @@ module.exports = {
     if (interaction.guild.id === '544782680051679242') {
       const subCommand = interaction.options.getSubcommand();
       const instanceState = await svm.getInstanceState();
-      const row = svm.getStartRow();
       if (subCommand === 'start') {
         if (instanceState === 'stopped') {
+          const row = svm.getStartRow();
           svm.startInstance();
           await interaction.reply({
             content: 'Server is starting!',
             components: [row],
           });
         } else {
-          await interaction.reply(`Server is ${row}!`);
+          await interaction.reply(`Server is ${instanceState}!`);
         }
       } else if (subCommand === 'stop') {
         if (instanceState === 'running') {
           svm.stopInstance();
           await interaction.reply('Server is stopping!');
         } else {
-          await interaction.reply(`Server is ${row}`);
+          await interaction.reply(`Server is ${instanceState}`);
         }
       } else if (subCommand === 'info') {
         const ip = await svm.getInstanceIp();
