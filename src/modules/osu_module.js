@@ -200,7 +200,7 @@ exports.getOsuUserData = async (userName, type, mode) => {
     url.searchParams.append(key, params[key]),
   );
   if (mode !== null) {
-    url.searchParams.append(mode, mode);
+    url.searchParams.append('mode', mode);
   }
   const headers = {
     'Content-Type': 'application/json',
@@ -218,18 +218,21 @@ exports.getOsuUserData = async (userName, type, mode) => {
   return userData[0];
 };
 
-exports.getOsuMapData = async (mapId) => {
+exports.getOsuMapData = async (mapId, mode) => {
   const token = await getOsuToken();
 
   const url = new URL(`https://osu.ppy.sh/api/v2/beatmaps/${mapId}/scores`);
-  const params = {
-    mode: 'osu',
-    // mods: 'modi',
-    // type: 'sunt',
-  };
-  Object.keys(params).forEach((key) =>
-    url.searchParams.append(key, params[key]),
-  );
+  // const params = {
+  //   mode: 'osu',
+  //   'mods[]': 'HD',
+  // };
+  // Object.keys(params).forEach((key) =>
+  //   url.searchParams.append(key, params[key]),
+  // );
+  if (mode !== null) {
+    url.searchParams.append('mode', mode);
+  }
+  console.log(url);
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -239,7 +242,9 @@ exports.getOsuMapData = async (mapId) => {
   const mapData = await fetch(url, {
     method: 'GET',
     headers,
-  });
+  })
+    .then((response) => response.json())
+    .then((data) => data);
 
-  return mapData;
+  return mapData.scores[0];
 };
