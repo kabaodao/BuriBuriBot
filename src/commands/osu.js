@@ -47,6 +47,17 @@ module.exports = {
             .setName('map-id')
             .setDescription('Type map id of Osu!')
             .setRequired(true),
+        )
+        .addStringOption((option) =>
+          option
+            .setName('mode')
+            .setDescription('Choice game mode of Osu!')
+            .addChoices(
+              { name: 'Standard', value: 'osu' },
+              { name: 'Taiko', value: 'taiko' },
+              { name: 'Mania', value: 'mania' },
+              { name: 'Catch', value: 'fruits' },
+            ),
         ),
     ),
 
@@ -63,9 +74,10 @@ module.exports = {
       await interaction.reply({ embeds: [embed] });
     } else if (interaction.options.getSubcommand() === 'map') {
       const mapId = interaction.options.getString('map-id');
+      const mode = interaction.options.getString('mode');
 
-      console.log(await om.getOsuMapData(mapId));
-      await interaction.reply('None');
+      const data = await om.getOsuMapData(mapId, mode);
+      await interaction.reply(JSON.stringify(data));
     }
   },
 };

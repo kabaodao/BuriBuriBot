@@ -38,7 +38,7 @@ module.exports = {
           svm.stopInstance();
           await interaction.reply('Server is stopping!');
         } else {
-          await interaction.reply(`Server is ${instanceState}`);
+          await interaction.reply(`Server is ${instanceState}!`);
         }
       } else if (subCommand === 'info') {
         const ip = await svm.getInstanceIp();
