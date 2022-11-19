@@ -5,18 +5,7 @@ const svm = require('../modules/server_module.js');
 dotenv.config({ path: '../.env' });
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('server')
-    .setDescription('None')
-    .addSubcommand((subcommand) =>
-      subcommand.setName('start').setDescription('Start the server.'),
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName('stop').setDescription('Stop the server.'),
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName('info').setDescription('Show the server information.'),
-    ),
+  data: new SlashCommandBuilder().setName('server').setDescription('None'),
 
   async execute(interaction) {
     if (interaction.guild.id === '544782680051679242') {
