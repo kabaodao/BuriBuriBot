@@ -1,5 +1,10 @@
 const dotenv = require('dotenv');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+} = require('discord.js');
 const aws = require('aws-sdk');
 
 dotenv.config({ path: '../.env' });
@@ -81,13 +86,40 @@ exports.getInstanceIp = async () => {
   return ip;
 };
 
-exports.getStartRow = () => {
-  const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId('info')
-      .setLabel('Info')
-      .setStyle(ButtonStyle.Primary),
-  );
+exports.getEmbed = async (text) => {
+  const state = await this.getInstanceState();
+  const ip = await this.getInstanceIp();
 
+  const embed = new EmbedBuilder()
+    .setColor(0x0099ff)
+    .setTitle('Server')
+    .setDescription(`Log: ${text}`)
+    .addFields({ name: 'State', value: `${state}`, inline: true })
+    .addFields({ name: 'IP', value: `||${ip}||`, inline: true })
+    .setTimestamp();
+
+  return embed;
+};
+
+exports.getServerCommandRow = () => {
+  const row = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId('start')
+        .setLabel('Start')
+        .setStyle(ButtonStyle.Success),
+    )
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId('stop')
+        .setLabel('Stop')
+        .setStyle(ButtonStyle.Danger),
+    )
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId('info')
+        .setLabel('Info')
+        .setStyle(ButtonStyle.Primary),
+    );
   return row;
 };
