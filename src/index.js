@@ -43,4 +43,8 @@ process.on('unhandledRejection', (error) => {
   console.error('Unhandled promise rejection:', error);
 });
 
-client.login(process.env.DISCORD_TOKEN);
+if (process.argv[2] === 'dev') {
+  client.login(process.env.DEV_DISCORD_TOKEN);
+} else {
+  client.login(process.env.DISCORD_TOKEN);
+}
