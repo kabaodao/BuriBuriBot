@@ -9,35 +9,55 @@ module.exports = {
     const state = await svm.getInstanceState();
     if (interaction.customId === 'start') {
       if (state === 'stopped') {
-        svm.startInstance();
-        const embed = await svm.getEmbed('Server is starting!');
-        await interaction.update({
-          embeds: [embed],
-        });
+        try {
+          await svm.startInstance();
+          const embed = await svm.getEmbed('Server is starting!');
+          await interaction.update({
+            embeds: [embed],
+          });
+        } catch (e) {
+          console.log(e);
+        }
       } else {
-        const embed = await svm.getEmbed(`Server is ${state}!`);
-        await interaction.update({
-          embeds: [embed],
-        });
+        try {
+          const embed = await svm.getEmbed(`Server is already ${state}!`);
+          await interaction.update({
+            embeds: [embed],
+          });
+        } catch (e) {
+          console.log(e);
+        }
       }
     } else if (interaction.customId === 'stop') {
       if (state === 'running') {
-        svm.stopInstance();
-        const embed = await svm.getEmbed('Server is stopping!');
-        await interaction.update({
-          embeds: [embed],
-        });
+        try {
+          await svm.stopInstance();
+          const embed = await svm.getEmbed('Server is stopping!');
+          await interaction.update({
+            embeds: [embed],
+          });
+        } catch (e) {
+          console.log(e);
+        }
       } else {
-        const embed = await svm.getEmbed(`Server is ${state}!`);
-        await interaction.update({
-          embeds: [embed],
-        });
+        try {
+          const embed = await svm.getEmbed(`Server is already ${state}!`);
+          await interaction.update({
+            embeds: [embed],
+          });
+        } catch (e) {
+          console.log(e);
+        }
       }
     } else if (interaction.customId === 'info') {
-      const embed = await svm.getEmbed('Reload embed!');
-      await interaction.update({
-        embeds: [embed],
-      });
+      try {
+        const embed = await svm.getEmbed('Reload embed!');
+        await interaction.update({
+          embeds: [embed],
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   },
 };
