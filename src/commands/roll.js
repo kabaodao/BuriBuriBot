@@ -42,9 +42,6 @@ module.exports = {
       });
     } else if (membersCount < 10) {
       await interaction.reply('Need 10 people.');
-      // await interaction.reply({
-      //   embeds: [createEmbed(rollMembers(membersMap))],
-      // });
     } else if (membersCount > 10) {
       await interaction.reply('Only 10 people.');
     }
