@@ -4,7 +4,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('role')
     .setDescription('Change role.')
-    // Add command.
     .addSubcommand((subcommand) =>
       subcommand
         .setName('add')
@@ -22,7 +21,6 @@ module.exports = {
             .setRequired(true),
         ),
     )
-    // Remove command.
     .addSubcommand((subcommand) =>
       subcommand
         .setName('remove')
@@ -49,7 +47,6 @@ module.exports = {
 
     if (interaction.options.getSubcommand() === 'add') {
       if (interaction.member.roles.cache.has('844246216560607233')) {
-        // Add Role
         try {
           await userOfGuild.roles.add(role);
           await interaction.reply(
@@ -64,7 +61,6 @@ module.exports = {
       }
     } else if (interaction.options.getSubcommand() === 'remove') {
       if (interaction.member.roles.cache.has('844246216560607233')) {
-        // remove Role
         try {
           await userOfGuild.roles.remove(role);
           await interaction.reply(
