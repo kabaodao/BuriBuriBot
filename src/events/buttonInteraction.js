@@ -15,6 +15,7 @@ module.exports = {
           await interaction.update({
             embeds: [embed],
           });
+          await interaction.followUp(`<@${interaction.user.id}> has started the server!`);
         } catch (e) {
           console.log(e);
         }
@@ -36,6 +37,7 @@ module.exports = {
           await interaction.update({
             embeds: [embed],
           });
+          await interaction.followUp(`<@${interaction.user.id}> has stopped the server!`);
         } catch (e) {
           console.log(e);
         }
