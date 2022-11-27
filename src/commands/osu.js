@@ -21,10 +21,7 @@ module.exports = {
             .setName('type')
             .setDescription('Choice Score type of Osu!')
             .setRequired(true)
-            .addChoices(
-              { name: 'best', value: 'best' },
-              { name: 'recent', value: 'recent' },
-            ),
+            .addChoices({ name: 'best', value: 'best' }, { name: 'recent', value: 'recent' }),
         )
         .addStringOption((option) =>
           option
@@ -43,10 +40,7 @@ module.exports = {
         .setName('map')
         .setDescription('Shows the map.')
         .addStringOption((option) =>
-          option
-            .setName('map-id')
-            .setDescription('Type map id of Osu!')
-            .setRequired(true),
+          option.setName('map-id').setDescription('Type map id of Osu!').setRequired(true),
         )
         .addStringOption((option) =>
           option
@@ -67,10 +61,7 @@ module.exports = {
       const type = interaction.options.getString('type');
       const mode = interaction.options.getString('mode');
 
-      const embed = om.createUserEmbed(
-        await om.getOsuUserData(userName, type, mode),
-        type,
-      );
+      const embed = om.createUserEmbed(await om.getOsuUserData(userName, type, mode), type);
       await interaction.reply({ embeds: [embed] });
     } else if (interaction.options.getSubcommand() === 'map') {
       const mapId = interaction.options.getString('map-id');

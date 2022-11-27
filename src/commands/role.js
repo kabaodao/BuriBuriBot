@@ -9,16 +9,10 @@ module.exports = {
         .setName('add')
         .setDescription('Add a specified role.')
         .addRoleOption((option) =>
-          option
-            .setName('role')
-            .setDescription('Select role.')
-            .setRequired(true),
+          option.setName('role').setDescription('Select role.').setRequired(true),
         )
         .addUserOption((option) =>
-          option
-            .setName('user')
-            .setDescription('Select user.')
-            .setRequired(true),
+          option.setName('user').setDescription('Select user.').setRequired(true),
         ),
     )
     .addSubcommand((subcommand) =>
@@ -26,16 +20,10 @@ module.exports = {
         .setName('remove')
         .setDescription('Remove a specified role')
         .addRoleOption((option) =>
-          option
-            .setName('role')
-            .setDescription('Select role.')
-            .setRequired(true),
+          option.setName('role').setDescription('Select role.').setRequired(true),
         )
         .addUserOption((option) =>
-          option
-            .setName('user')
-            .setDescription('Select user.')
-            .setRequired(true),
+          option.setName('user').setDescription('Select user.').setRequired(true),
         ),
     ),
 
@@ -49,9 +37,7 @@ module.exports = {
       if (interaction.member.roles.cache.has('844246216560607233')) {
         try {
           await userOfGuild.roles.add(role);
-          await interaction.reply(
-            `${user} added ${role} role to ${selectUser}.`,
-          );
+          await interaction.reply(`${user} added ${role} role to ${selectUser}.`);
         } catch (error) {
           console.log(error);
           await interaction.reply('Error occurred.');
@@ -63,9 +49,7 @@ module.exports = {
       if (interaction.member.roles.cache.has('844246216560607233')) {
         try {
           await userOfGuild.roles.remove(role);
-          await interaction.reply(
-            `${user} removed ${role} role of ${selectUser}.`,
-          );
+          await interaction.reply(`${user} removed ${role} role of ${selectUser}.`);
         } catch (error) {
           console.log(error);
           await interaction.reply('Error occurred.');

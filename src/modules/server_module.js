@@ -1,10 +1,5 @@
 const dotenv = require('dotenv');
-const {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-} = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const {
   EC2Client,
   StartInstancesCommand,
@@ -113,22 +108,13 @@ exports.getEmbed = async (text) => {
 exports.getServerCommandRow = () => {
   const row = new ActionRowBuilder()
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('start')
-        .setLabel('Start')
-        .setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId('start').setLabel('Start').setStyle(ButtonStyle.Success),
     )
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('stop')
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder().setCustomId('stop').setLabel('Stop').setStyle(ButtonStyle.Danger),
     )
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('info')
-        .setLabel('Info')
-        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('info').setLabel('Info').setStyle(ButtonStyle.Primary),
     );
   return row;
 };

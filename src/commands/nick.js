@@ -7,9 +7,7 @@ module.exports = {
     .addUserOption((option) =>
       option.setName('user').setDescription('Select user.').setRequired(true),
     )
-    .addStringOption((option) =>
-      option.setName('nickname').setDescription('Enter new nickname.'),
-    ),
+    .addStringOption((option) => option.setName('nickname').setDescription('Enter new nickname.')),
 
   async execute(interaction) {
     const user = `<@${interaction.user.id}>`;
