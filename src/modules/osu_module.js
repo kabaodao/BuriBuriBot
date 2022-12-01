@@ -1,6 +1,5 @@
 const fs = require('node:fs');
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetchh }) => fetchh(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetchh }) => fetchh(...args));
 const dotenv = require('dotenv');
 const { EmbedBuilder } = require('discord.js');
 
@@ -122,13 +121,9 @@ const writeOsuToken = (tokenJson, unixTimestamp, responseData) => {
       newTokeJson[i] = responseData[i];
     }
   }
-  fs.writeFile(
-    '../osu_token.json',
-    JSON.stringify(newTokeJson, null, '  '),
-    (err) => {
-      if (err) console.log('error', err);
-    },
-  );
+  fs.writeFile('../osu_token.json', JSON.stringify(newTokeJson, null, '  '), (err) => {
+    if (err) console.log('error', err);
+  });
 };
 
 const getOsuToken = async () => {
@@ -188,17 +183,13 @@ exports.getOsuUserData = async (userName, type, mode) => {
   const token = await getOsuToken();
   const userId = await getOsuUserId(token, userName);
 
-  const url = new URL(
-    `https://osu.ppy.sh/api/v2/users/${userId}/scores/${type}`,
-  );
+  const url = new URL(`https://osu.ppy.sh/api/v2/users/${userId}/scores/${type}`);
   const params = {
     include_fails: '0',
     limit: '1',
     offset: '0',
   };
-  Object.keys(params).forEach((key) =>
-    url.searchParams.append(key, params[key]),
-  );
+  Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
   if (mode !== null) {
     url.searchParams.append('mode', mode);
   }

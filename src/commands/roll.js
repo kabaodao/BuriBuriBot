@@ -5,31 +5,22 @@ module.exports = {
     .setName('roll')
     .setDescription('Divide by the members in the voice chat for 5vs5.')
     .addChannelOption((option) =>
-      option
-        .setName('voice_channel')
-        .setDescription('Chose voice channel.')
-        .setRequired(true),
+      option.setName('voice_channel').setDescription('Chose voice channel.').setRequired(true),
     )
     .addUserOption((option) =>
       option
         .setName('user_1')
-        .setDescription(
-          'Please enter the player to be excluded. (Only if it over)',
-        ),
+        .setDescription('Please enter the player to be excluded. (Only if it over)'),
     )
     .addUserOption((option) =>
       option
         .setName('user_2')
-        .setDescription(
-          'Please enter the player to be excluded. (Only if it over)',
-        ),
+        .setDescription('Please enter the player to be excluded. (Only if it over)'),
     )
     .addUserOption((option) =>
       option
         .setName('user_3')
-        .setDescription(
-          'Please enter the player to be excluded. (Only if it over)',
-        ),
+        .setDescription('Please enter the player to be excluded. (Only if it over)'),
     ),
 
   async execute(interaction) {
@@ -42,9 +33,6 @@ module.exports = {
       });
     } else if (membersCount < 10) {
       await interaction.reply('Need 10 people.');
-      // await interaction.reply({
-      //   embeds: [createEmbed(rollMembers(membersMap))],
-      // });
     } else if (membersCount > 10) {
       await interaction.reply('Only 10 people.');
     }

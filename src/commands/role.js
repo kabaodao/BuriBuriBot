@@ -4,40 +4,26 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('role')
     .setDescription('Change role.')
-    // Add command.
     .addSubcommand((subcommand) =>
       subcommand
         .setName('add')
         .setDescription('Add a specified role.')
         .addRoleOption((option) =>
-          option
-            .setName('role')
-            .setDescription('Select role.')
-            .setRequired(true),
+          option.setName('role').setDescription('Select role.').setRequired(true),
         )
         .addUserOption((option) =>
-          option
-            .setName('user')
-            .setDescription('Select user.')
-            .setRequired(true),
+          option.setName('user').setDescription('Select user.').setRequired(true),
         ),
     )
-    // Remove command.
     .addSubcommand((subcommand) =>
       subcommand
         .setName('remove')
         .setDescription('Remove a specified role')
         .addRoleOption((option) =>
-          option
-            .setName('role')
-            .setDescription('Select role.')
-            .setRequired(true),
+          option.setName('role').setDescription('Select role.').setRequired(true),
         )
         .addUserOption((option) =>
-          option
-            .setName('user')
-            .setDescription('Select user.')
-            .setRequired(true),
+          option.setName('user').setDescription('Select user.').setRequired(true),
         ),
     ),
 
@@ -49,12 +35,9 @@ module.exports = {
 
     if (interaction.options.getSubcommand() === 'add') {
       if (interaction.member.roles.cache.has('844246216560607233')) {
-        // Add Role
         try {
           await userOfGuild.roles.add(role);
-          await interaction.reply(
-            `${user} added ${role} role to ${selectUser}.`,
-          );
+          await interaction.reply(`${user} added ${role} role to ${selectUser}.`);
         } catch (error) {
           console.log(error);
           await interaction.reply('Error occurred.');
@@ -64,12 +47,9 @@ module.exports = {
       }
     } else if (interaction.options.getSubcommand() === 'remove') {
       if (interaction.member.roles.cache.has('844246216560607233')) {
-        // remove Role
         try {
           await userOfGuild.roles.remove(role);
-          await interaction.reply(
-            `${user} removed ${role} role of ${selectUser}.`,
-          );
+          await interaction.reply(`${user} removed ${role} role of ${selectUser}.`);
         } catch (error) {
           console.log(error);
           await interaction.reply('Error occurred.');

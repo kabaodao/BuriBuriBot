@@ -12,9 +12,7 @@ const client = new Client({
 // Load commands
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs
-  .readdirSync(commandsPath)
-  .filter((file) => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
@@ -24,9 +22,7 @@ for (const file of commandFiles) {
 
 // Load events
 const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs
-  .readdirSync(eventsPath)
-  .filter((file) => file.endsWith('.js'));
+const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
@@ -43,4 +39,8 @@ process.on('unhandledRejection', (error) => {
   console.error('Unhandled promise rejection:', error);
 });
 
-client.login(process.env.DISCORD_TOKEN);
+if (process.argv[2] === 'dev') {
+  client.login(process.env.DEV_DISCORD_TOKEN);
+} else {
+  client.login(process.env.DISCORD_TOKEN);
+}

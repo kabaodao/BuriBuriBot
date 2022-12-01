@@ -1,85 +1,89 @@
 const dotenv = require('dotenv');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-} = require('discord.js');
-const aws = require('aws-sdk');
+  EC2Client,
+  StartInstancesCommand,
+  StopInstancesCommand,
+  DescribeInstancesCommand,
+} = require('@aws-sdk/client-ec2');
 
 dotenv.config({ path: '../.env' });
 
-aws.config.update({
-  region: process.env.AWS_REGION,
-});
+const client = new EC2Client({ region: 'ap-northeast-1' });
 
-const ec2 = new aws.EC2({
-  apiVersion: '2016-11-15',
-});
-
-const params = {
-  InstanceIds: [process.env.AWS_INSTANCE_ID],
-  DryRun: true,
-};
-
-exports.startInstance = () => {
-  ec2.startInstances(params, (err) => {
-    if (err && err.code === 'DryRunOperation') {
-      params.DryRun = false;
-      ec2.startInstances(params, (err, data) => {
-        if (err) {
-          console.log('Error', err);
-        } else if (data) {
-          console.log('Success', data.StartingInstances);
-        }
+exports.startInstance = async () => {
+  const dryrunCommand = new StartInstancesCommand({
+    DryRun: true,
+    InstanceIds: [process.env.AWS_INSTANCE_ID],
+  });
+  try {
+    await client.send(dryrunCommand);
+  } catch (e) {
+    if (e.Code === 'DryRunOperation') {
+      const command = new StartInstancesCommand({
+        InstanceIds: [process.env.AWS_INSTANCE_ID],
       });
+      const response = await client.send(command);
+
+      return response;
     } else {
-      console.log("You don't have permission to start instances.");
+      return e;
     }
-  });
+  }
 };
 
-exports.stopInstance = () => {
-  ec2.stopInstances(params, (err) => {
-    if (err && err.code === 'DryRunOperation') {
-      console.log(err);
-      params.DryRun = false;
-      ec2.stopInstances(params, (err, data) => {
-        if (err) {
-          console.log('Error', err);
-        } else if (data) {
-          console.log('Success', data.StoppingInstances);
-        }
+exports.stopInstance = async () => {
+  const dryrunCommand = new StopInstancesCommand({
+    DryRun: true,
+    InstanceIds: [process.env.AWS_INSTANCE_ID],
+  });
+  try {
+    await client.send(dryrunCommand);
+  } catch (e) {
+    if (e.Code === 'DryRunOperation') {
+      const command = new StopInstancesCommand({
+        InstanceIds: [process.env.AWS_INSTANCE_ID],
       });
+      const response = await client.send(command);
+
+      return response;
     } else {
-      console.log("You don't have permission to stop instances");
+      return e;
     }
-  });
+  }
 };
 
-const getInstanceDescribe = () => {
-  return new Promise((resolve) => {
-    ec2.describeInstances({}, (err, data) => {
-      if (err) {
-        console.log('Error', err.stack);
-      } else {
-        resolve(data.Reservations[0].Instances[0]);
-      }
-    });
+const getInstanceDescribe = async () => {
+  const dryrunCommand = new DescribeInstancesCommand({
+    DryRun: true,
+    InstanceIds: [process.env.AWS_INSTANCE_ID],
   });
+  try {
+    await client.send(dryrunCommand);
+  } catch (e) {
+    if (e.Code === 'DryRunOperation') {
+      const command = new DescribeInstancesCommand({
+        InstanceIds: [process.env.AWS_INSTANCE_ID],
+      });
+      const response = await client.send(command);
+
+      return response;
+    } else {
+      return e;
+    }
+  }
 };
 
 exports.getInstanceState = async () => {
-  const instanceData = await getInstanceDescribe();
-
-  return instanceData.State.Name;
+  const instanceDescribe = await getInstanceDescribe();
+  return instanceDescribe.Reservations[0].Instances[0].State.Name;
 };
 
 exports.getInstanceIp = async () => {
-  const instanceData = await getInstanceDescribe();
+  const instanceDescribe = await getInstanceDescribe();
   let ip = 'None';
-  if (instanceData.State.Name === 'running') {
-    ip = instanceData.PublicIpAddress;
+  if (instanceDescribe.Reservations[0].Instances[0].State.Name === 'running') {
+    ip = instanceDescribe.Reservations[0].Instances[0].PublicIpAddress;
     return ip;
   }
 
@@ -104,22 +108,13 @@ exports.getEmbed = async (text) => {
 exports.getServerCommandRow = () => {
   const row = new ActionRowBuilder()
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('start')
-        .setLabel('Start')
-        .setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId('start').setLabel('Start').setStyle(ButtonStyle.Success),
     )
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('stop')
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder().setCustomId('stop').setLabel('Stop').setStyle(ButtonStyle.Danger),
     )
     .addComponents(
-      new ButtonBuilder()
-        .setCustomId('info')
-        .setLabel('Info')
-        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('info').setLabel('Info').setStyle(ButtonStyle.Primary),
     );
   return row;
 };
