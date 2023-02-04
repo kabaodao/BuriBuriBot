@@ -32,7 +32,7 @@ jobs:
           sudo docker rmi main_image
           sudo git -C ../kabaodao/BuriBuriBot pull origin main
           sudo docker build -t main_image ../kabaodao/BuriBuriBot/.
-          sudo docker run -d \
+          sudo docker run -d --restart always \
           -e DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }} \
           -e OSU_CLIENT_ID=${{ secrets.OSU_CLIENT_ID }} \
           -e OSU_CLIENT_SECRET=${{ secrets.OSU_CLIENT_SECRET }} \
