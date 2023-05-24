@@ -8,7 +8,7 @@ module.exports = {
   data: new SlashCommandBuilder().setName('server').setDescription('None'),
 
   async execute(interaction) {
-    if (interaction.guild.id === '544782680051679242') {
+    if (interaction.guild.id === '1105623931735523388') {
       const embed = await svm.getEmbed('Typed /server command !');
       const row = await svm.getServerCommandRow();
       await interaction.reply({
