@@ -5,6 +5,7 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.isButton()) return;
+    if (interaction.member.roles.cache.has('1105715047134675056')) return;
 
     const state = await svm.getInstanceState();
     if (interaction.customId === 'start') {
